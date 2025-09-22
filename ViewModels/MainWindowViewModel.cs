@@ -15,11 +15,15 @@ public partial class MainWindowViewModel : ViewModelBase
     // No tiene que tener get y set
     [ObservableProperty]
     private string mensaje = string.Empty;
+
+    [ObservableProperty] private bool avanzadas = false;
     
-    public string Greeting { set; get; } = "hola Pedro";
+    [ObservableProperty] private List<Boligrafo> boligrafos = new();
+    
+    public string Greeting { set; get; } = "FORMULARIO";
     public string Saludo { set; get; } = "Saludo para la clase";
     
-    public Boligrafo Boli { get; set; } = new();
+    [ObservableProperty]private Boligrafo boli = new();
     
     
     
@@ -28,6 +32,38 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         CargarCombo();
+        CargarBolis();
+    }
+
+    private void CargarBolis()
+    {
+        Boligrafo boli = new Boligrafo();
+        boli.Codigo = "3214341";
+        boli.Color = "Azul";
+        Boligrafos.Add(boli);
+        
+        Boligrafo boli2 = new Boligrafo();
+        boli2.Codigo = "234er";
+        boli2.Color = "Verde";
+        Boligrafos.Add(boli2);
+        
+        Boligrafo boli3 = new Boligrafo();
+        boli3.Codigo = "235632";
+        boli3.Color = "Naranja";
+        Boligrafos.Add(boli3);
+    }
+
+    [RelayCommand]
+    public void MostrarOpcionesAvanzadas()
+    {
+        if (Avanzadas)
+        {
+            Avanzadas = false;
+        }
+        else
+        {
+            Avanzadas = true;
+        }
     }
 
     private void CargarCombo()
@@ -56,8 +92,10 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else
         {
-            Mensaje = String.Empty;
             Console.WriteLine(Boli.Codigo+" "+Boli.Color);
+            Mensaje = String.Empty;
+            Boligrafos.Add(Boli);
+            Boli = new Boligrafo();
         }
     }
 }
