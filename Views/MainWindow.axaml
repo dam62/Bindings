@@ -36,16 +36,17 @@
                 <TextBox Margin="5,5,0,5" Width="100"/>
             </StackPanel>
         
-            <CheckBox Content="Marca si quieres"
+            <CheckBox Content="Aceptar condiciones"
                       HorizontalAlignment="Center"
                       Margin="10"
-                      IsChecked="False"
+                      Command="{Binding EstadoInicialCheckCommand}"
+                      CommandParameter="{Binding ElementName=Condiciones}"
                       Name="Condiciones"/>
         
             <TextBlock Text="{Binding Mensaje}" Margin="10" Foreground="DarkRed" HorizontalAlignment="Center"/>
             <Button Width="200" Margin="10" Content="CREAR"
                     Command="{Binding MostrarBoliCommand}"
-                    CommandParameter="{Binding ElementName=Condiciones, Path=IsChecked}"
+                    CommandParameter="{Binding ElementName=Condiciones}"
                     HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
         </StackPanel>
         <!-- Fin Contenedor del formulario -->
@@ -53,11 +54,16 @@
         <!-- Inicio Contenedor consultas -->
         <StackPanel>
             <ComboBox ItemsSource="{Binding Boligrafos}"/>
-            <ListBox ItemsSource="{Binding Boligrafos}">
+            <ListBox Height="350" Background="Transparent" SelectedItem="{Binding BoliSeleccionado}" ItemsSource="{Binding Boligrafos}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="10" CornerRadius="10" BorderThickness="2">
                             <StackPanel>
+                                <Interaction.Behaviors>
+                                   <EventTriggerBehavior EventName="doubleTapped">
+                                       <InvokeCommandAction Command="{Binding }"/>
+                                   </EventTriggerBehavior>
+                                </Interaction.Behaviors>
                                 <Image Width="100" Source="avares://Bindings/Assets/images.jpg"/>
                                 <TextBlock HorizontalAlignment="Center" Text="{Binding Codigo}"/>
                                 <TextBlock HorizontalAlignment="Center" Text="{Binding Color}"/>

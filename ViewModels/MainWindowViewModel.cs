@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Avalonia.Controls;
+using Avalonia.Media;
 using Bindings.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -24,6 +26,8 @@ public partial class MainWindowViewModel : ViewModelBase
     public string Saludo { set; get; } = "Saludo para la clase";
     
     [ObservableProperty]private Boligrafo boli = new();
+
+    [ObservableProperty] private Boligrafo boliSeleccionado = new();
     
     
     
@@ -54,6 +58,12 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    public void CargarBoliSeleccionado()
+    {
+        Boli = new Boligrafo();
+    }
+
+    [RelayCommand]
     public void MostrarOpcionesAvanzadas()
     {
         if (Avanzadas)
@@ -76,12 +86,29 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    public void EstadoInicialCheck(object parameter)
+    {
+        // Castear el parametro a checkbox
+        CheckBox check = (CheckBox)parameter;
+        // Establecer valores iniciales
+        if (check.IsChecked == true)
+        {
+            check.Foreground = Brushes.Black;
+            check.FontWeight = FontWeight.Bold;
+        }
+    }
+    
+    [RelayCommand]
     public void MostrarBoli(object parameter)
     {
-        if (parameter is false)
+        CheckBox check = (CheckBox)parameter;
+        
+        if (check.IsChecked is false)
         {
             Mensaje = "Debes marcar el check";
             Console.WriteLine("Debes marcar el check");
+            check.Foreground = Brushes.Red;
+            check.FontWeight = FontWeight.Bold;
             return;
         }
         
@@ -92,7 +119,7 @@ public partial class MainWindowViewModel : ViewModelBase
         }
         else
         {
-            Console.WriteLine(Boli.Codigo+" "+Boli.Color);
+            Console.WriteLine(Boli.Codigo + " " + Boli.Color);
             Mensaje = String.Empty;
             Boligrafos.Add(Boli);
             Boli = new Boligrafo();
