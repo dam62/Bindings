@@ -20,13 +20,25 @@
             <StackPanel>
                 <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding Saludo}" HorizontalAlignment="Center" />
+                <!-- Selector de colores -->
                 <ComboBox Width="200" SelectedIndex="0"
                           SelectedItem="{Binding Boli.Color}"
                           ItemsSource="{Binding ListaColores}"
                           HorizontalAlignment="Center"/>
+                <!-- Entrada para código de boli -->
                 <TextBox Width="200" Margin="10" Text="{Binding Boli.Codigo}"/>
-            
-                <CheckBox HorizontalAlignment="Center"
+                
+                <!-- Selector de fecha -->
+                <CalendarDatePicker HorizontalAlignment="Center" SelectedDate="{Binding Boli.Fecha}" Width="200">
+                    <Interaction.Behaviors>
+                        <EventTriggerBehavior EventName="SelectedDateChanged">
+                            <InvokeCommandAction Command="{Binding ComprobarFechaCommand}"/>
+                        </EventTriggerBehavior>
+                    </Interaction.Behaviors>
+                </CalendarDatePicker>
+                
+                <!-- Check de opciones avanzadas -->
+                <CheckBox HorizontalAlignment="Center" Width="200"
                           Margin="10"
                           Command="{Binding MostrarOpcionesAvanzadasCommand}"
                           Content="Avanzadas"/>
@@ -36,15 +48,19 @@
                     <TextBox Margin="0,5,0,5" Width="95"/>
                     <TextBox Margin="5,5,0,5" Width="100"/>
                 </StackPanel>
-            
+                
+                <!-- Chack de las condiciones -->
                 <CheckBox Content="Aceptar condiciones"
                           HorizontalAlignment="Center"
-                          Margin="10"
+                          Width="200"
+                          Margin="0"
                           Command="{Binding EstadoInicialCheckCommand}"
                           CommandParameter="{Binding ElementName=Condiciones}"
                           Name="Condiciones"/>
             
                 <TextBlock Text="{Binding Mensaje}" Margin="10" Foreground="DarkRed" HorizontalAlignment="Center"/>
+                
+                <!-- Boton de crear -->
                 <Button Width="200" Margin="10" Content="CREAR"
                         Command="{Binding MostrarBoliCommand}"
                         CommandParameter="{Binding ElementName=Condiciones}"

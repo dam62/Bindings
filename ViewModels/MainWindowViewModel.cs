@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Bindings.Models;
@@ -39,6 +40,26 @@ public partial class MainWindowViewModel : ViewModelBase
         CargarBolis();
     }
 
+    [RelayCommand]
+    public void ComprobarFecha()
+    {
+        CheckDate();
+    }
+    
+    private bool CheckDate()
+    {
+        if (Boli.Fecha < DateTime.Today)
+        {
+            Mensaje = "La fecha no puede ser inferior a hoy";
+            return false;
+        }
+        else
+        {
+            Mensaje = string.Empty; //Mensaje = "";
+            return true;
+        }
+    }
+
     private void CargarBolis()
     {
         Boligrafo boli = new Boligrafo();
@@ -60,9 +81,8 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     public void CargarBoliSeleccionado()
     {
-        Boli = new Boligrafo();
-        BoliSeleccionado.Color = Boli.Color;
-        BoliSeleccionado.Codigo = Boli.Codigo;
+        Boli = BoliSeleccionado;
+        
     }
 
     [RelayCommand]
@@ -103,6 +123,11 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     public void MostrarBoli(object parameter)
     {
+        if (!CheckDate())
+        {
+            return;
+        }
+        
         CheckBox check = (CheckBox)parameter;
         
         if (check.IsChecked is false)
