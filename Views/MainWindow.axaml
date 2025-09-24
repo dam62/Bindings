@@ -15,41 +15,43 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
     <UniformGrid Columns="2">
-        <!-- Inicio Contenedor del formulario -->
-        <StackPanel>
-            <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Text="{Binding Saludo}" HorizontalAlignment="Center" />
-            <ComboBox Width="200" SelectedIndex="0"
-                      SelectedItem="{Binding Boli.Color}"
-                      ItemsSource="{Binding ListaColores}"
-                      HorizontalAlignment="Center"/>
-            <TextBox Width="200" Margin="10" Text="{Binding Boli.Codigo}"/>
-        
-            <CheckBox HorizontalAlignment="Center"
-                      Margin="10"
-                      Command="{Binding MostrarOpcionesAvanzadasCommand}"
-                      Content="Avanzadas"/>
-        
-            <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Center"
-                        IsVisible="{Binding Avanzadas}">
-                <TextBox Margin="0,5,0,5" Width="95"/>
-                <TextBox Margin="5,5,0,5" Width="100"/>
+        <Border Margin="30" CornerRadius="10" Padding="5" BorderBrush="Aqua" BorderThickness="1">
+            <!-- Inicio Contenedor del formulario -->
+            <StackPanel>
+                <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Saludo}" HorizontalAlignment="Center" />
+                <ComboBox Width="200" SelectedIndex="0"
+                          SelectedItem="{Binding Boli.Color}"
+                          ItemsSource="{Binding ListaColores}"
+                          HorizontalAlignment="Center"/>
+                <TextBox Width="200" Margin="10" Text="{Binding Boli.Codigo}"/>
+            
+                <CheckBox HorizontalAlignment="Center"
+                          Margin="10"
+                          Command="{Binding MostrarOpcionesAvanzadasCommand}"
+                          Content="Avanzadas"/>
+            
+                <StackPanel Width="200" Orientation="Horizontal" HorizontalAlignment="Center"
+                            IsVisible="{Binding Avanzadas}">
+                    <TextBox Margin="0,5,0,5" Width="95"/>
+                    <TextBox Margin="5,5,0,5" Width="100"/>
+                </StackPanel>
+            
+                <CheckBox Content="Aceptar condiciones"
+                          HorizontalAlignment="Center"
+                          Margin="10"
+                          Command="{Binding EstadoInicialCheckCommand}"
+                          CommandParameter="{Binding ElementName=Condiciones}"
+                          Name="Condiciones"/>
+            
+                <TextBlock Text="{Binding Mensaje}" Margin="10" Foreground="DarkRed" HorizontalAlignment="Center"/>
+                <Button Width="200" Margin="10" Content="CREAR"
+                        Command="{Binding MostrarBoliCommand}"
+                        CommandParameter="{Binding ElementName=Condiciones}"
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
             </StackPanel>
-        
-            <CheckBox Content="Aceptar condiciones"
-                      HorizontalAlignment="Center"
-                      Margin="10"
-                      Command="{Binding EstadoInicialCheckCommand}"
-                      CommandParameter="{Binding ElementName=Condiciones}"
-                      Name="Condiciones"/>
-        
-            <TextBlock Text="{Binding Mensaje}" Margin="10" Foreground="DarkRed" HorizontalAlignment="Center"/>
-            <Button Width="200" Margin="10" Content="CREAR"
-                    Command="{Binding MostrarBoliCommand}"
-                    CommandParameter="{Binding ElementName=Condiciones}"
-                    HorizontalAlignment="Center" HorizontalContentAlignment="Center"/>
-        </StackPanel>
-        <!-- Fin Contenedor del formulario -->
+            <!-- Fin Contenedor del formulario -->
+        </Border>
         
         <!-- Inicio Contenedor consultas -->
         <StackPanel>
@@ -60,13 +62,26 @@
                         <Border Margin="10" CornerRadius="10" BorderThickness="2">
                             <StackPanel>
                                 <Interaction.Behaviors>
-                                   <EventTriggerBehavior EventName="doubleTapped">
+                                   <EventTriggerBehavior EventName="DoubleTapped">
                                        <InvokeCommandAction Command="{Binding }"/>
                                    </EventTriggerBehavior>
                                 </Interaction.Behaviors>
-                                <Image Width="100" Source="avares://Bindings/Assets/images.jpg"/>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding Codigo}"/>
-                                <TextBlock HorizontalAlignment="Center" Text="{Binding Color}"/>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                               <ItemsControl.ItemTemplate>
+                                   <DataTemplate>
+                                       <Border Margin="10" CornerRadius="10" Padding="5" BorderBrush="Aqua" BorderThickness="1">
+                                           <StackPanel>
+                                               <Image Width="100" Source="avares://Bindings/Assets/images.jpg"/>
+                                               <TextBlock HorizontalAlignment="Center" Text="{Binding Codigo}"/>
+                                               <TextBlock HorizontalAlignment="Center" Text="{Binding Color}"/>
+                                           </StackPanel>
+                                       </Border>
+                                   </DataTemplate>
+                               </ItemsControl.ItemTemplate>
                             </StackPanel>
                         </Border>
                     </DataTemplate>

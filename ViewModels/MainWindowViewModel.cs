@@ -61,6 +61,8 @@ public partial class MainWindowViewModel : ViewModelBase
     public void CargarBoliSeleccionado()
     {
         Boli = new Boligrafo();
+        BoliSeleccionado.Color = Boli.Color;
+        BoliSeleccionado.Codigo = Boli.Codigo;
     }
 
     [RelayCommand]
