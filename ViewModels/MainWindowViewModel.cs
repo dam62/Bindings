@@ -30,7 +30,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty] private Boligrafo boliSeleccionado = new();
     
-    
+    [ObservableProperty] private bool modoEditar = false;
+    [ObservableProperty] private bool modoCrear = true;
     
     public List<string> ListaColores { set; get; }
 
@@ -82,6 +83,8 @@ public partial class MainWindowViewModel : ViewModelBase
     public void CargarBoliSeleccionado()
     {
         Boli = BoliSeleccionado;
+        ModoCrear = false;
+        ModoEditar = true;
         
     }
 

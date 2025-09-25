@@ -71,33 +71,42 @@
         
         <!-- Inicio Contenedor consultas -->
         <StackPanel>
-            <ComboBox ItemsSource="{Binding Boligrafos}"/>
-            <ListBox Height="350" Background="Transparent" SelectedItem="{Binding BoliSeleccionado}" ItemsSource="{Binding Boligrafos}">
+            <ComboBox ItemsSource=
+                      "{Binding 
+                      Boligrafos}"/>
+            <ListBox Background="Transparent"
+                     Height="350" 
+                     SelectedItem="{Binding BoliSeleccionado}"
+                     ItemsSource="{Binding 
+                     Boligrafos}">
+                <Interaction.Behaviors>
+                    <EventTriggerBehavior EventName="DoubleTapped">
+                        <InvokeCommandAction 
+                            Command="{Binding CargarBoliSeleccionadoCommand}"/>
+                    </EventTriggerBehavior>
+                </Interaction.Behaviors>
+                
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border Margin="10" CornerRadius="10" BorderThickness="2">
+                        <Border Margin="0" CornerRadius="10"
+                                Padding="15"
+                                BorderBrush="Gray"
+                                BoxShadow="10 10 5 2 DarkGray"
+                                BorderThickness="1">
+                            
                             <StackPanel>
-                                <Interaction.Behaviors>
-                                   <EventTriggerBehavior EventName="DoubleTapped">
-                                       <InvokeCommandAction Command="{Binding }"/>
-                                   </EventTriggerBehavior>
-                                </Interaction.Behaviors>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                               <ItemsControl.ItemTemplate>
-                                   <DataTemplate>
-                                       <Border Margin="10" CornerRadius="10" Padding="5" BorderBrush="Aqua" BorderThickness="1">
-                                           <StackPanel>
-                                               <Image Width="100" Source="avares://Bindings/Assets/images.jpg"/>
-                                               <TextBlock HorizontalAlignment="Center" Text="{Binding Codigo}"/>
-                                               <TextBlock HorizontalAlignment="Center" Text="{Binding Color}"/>
-                                           </StackPanel>
-                                       </Border>
-                                   </DataTemplate>
-                               </ItemsControl.ItemTemplate>
+                                <Image Width="50"
+                                       Source="avares://Bindings/Assets/images.jpg"/>
+                                <TextBlock HorizontalAlignment="Center"
+                                           Text="{Binding Codigo}"/>
+                                <TextBlock HorizontalAlignment="Center"
+                                           Text="{Binding Color}"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
